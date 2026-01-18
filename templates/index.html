@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Это САЙТ ЮСУФА</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Список задач</h1>
+
+        <form method="POST" style="margin-bottom: 20px;">
+            <input type="text" name="task" placeholder="ВВЕДИТЕ ЗАДАЧУ..." required
+                   style="width: 100%; padding: 12px; background: #000; border: 1px solid #333; color: #fff; margin-bottom: 10px;">
+            <button type="submit" class="complete-btn" style="width: 100%; border: none; cursor: pointer;">ДОБАВИТЬ</button>
+        </form>
+
+        <ul>
+            {% for task in tasks %}
+                <li>
+                    <span class="task-text">{{ task[1] }}</span>
+                    <a href="{{ url_for('complete', task_id=task[0]) }}" class="complete-btn">DONE</a>
+                    <a href="{{ url_for('delete', task_id=task[0]) }}" class="delete-btn"
+                       onclick="return confirm('УДАЛИТЬ?')">DEL</a>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <div style="margin-top: 30px; display: flex; flex-direction: column; gap: 10px;">
+            <a href="{{ url_for('completed_page') }}" class="task-text" style="text-align: center; text-decoration: none; color: #666;">
+                [ ПЕРЕЙТИ В АРХИВ ]
+            </a>
+            <a href="{{ url_for('other_site') }}" class="complete-btn" style="text-align: center; background: #e10600; color: #fff;">
+                ОТКРЫТЬ ВТОРОЙ САЙТ
+            </a>
+        </div>
+    </div>
+</body>
+</html>
