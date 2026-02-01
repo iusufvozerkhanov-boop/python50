@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>👥 Команда авторов</h1>
+
+<ul>
+    {% for id, author in authors.items() %}
+    <li>
+        <span class="task-text"><strong>{{ author.name }}</strong></span>
+        <a href="{{ url_for('author_detail', author_id=id) }}" class="complete-btn">Подробнее</a>
+    </li>
+    {% endfor %}
+</ul>
+
+<a href="/" class="link-btn">⬅️ На главную</a>
+{% endblock %}

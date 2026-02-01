@@ -1,24 +1,21 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>ARCHIVE</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <div class="container">
-        <h1>АРХИВ ЗАДАЧ</h1>
-        <ul>
-            {% for item in completed %}
-                <li>
-                    <span class="task-text" style="text-decoration: line-through; opacity: 0.5;">{{ item[1] }}</span>
-                    <a href="{{ url_for('delete_completed', task_id=item[0]) }}" class="delete-btn">ERASE</a>
-                </li>
-            {% endfor %}
-        </ul>
-        <a href="{{ url_for('index') }}" class="task-text" style="display: block; text-align: center; margin-top: 20px; text-decoration: none;">
-            [ НАЗАД ]
-        </a>
-    </div>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+<a href="{{ url_for('authors_page') }}">Авторы</a>
+
+<h1>✅ Выполненные</h1>
+
+<ul>
+    {% if completed %}
+        {% for task_id, task_name in completed %}
+            <li class="completed">
+                <span>{{ task_name }}</span>
+            </li>
+        {% endfor %}
+    {% else %}
+        <li class="empty">Пока нет выполненных задач 😊</li>
+    {% endif %}
+</ul>
+
+<a href="/" class="link-btn">⬅️ Назад</a>
+{% endblock %}

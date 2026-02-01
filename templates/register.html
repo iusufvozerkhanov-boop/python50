@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>🆕 Регистрация</h1>
+
+<form method="post">
+    <input name="username" placeholder="Логин" required>
+    <input type="password" name="password" placeholder="Пароль" required>
+    <button type="submit">Создать аккаунт</button>
+</form>
+
+<a href="/login" class="link-btn">Назад ко входу</a>
+{% endblock %}

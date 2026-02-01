@@ -1,39 +1,33 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>Это САЙТ ЮСУФА</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <div class="container">
-        <h1>Список задач</h1>
+{% extends "base.html" %}
 
-        <form method="POST" style="margin-bottom: 20px;">
-            <input type="text" name="task" placeholder="ВВЕДИТЕ ЗАДАЧУ..." required
-                   style="width: 100%; padding: 12px; background: #000; border: 1px solid #333; color: #fff; margin-bottom: 10px;">
-            <button type="submit" class="complete-btn" style="width: 100%; border: none; cursor: pointer;">ДОБАВИТЬ</button>
-        </form>
+{% block content %}
 
-        <ul>
-            {% for task in tasks %}
-                <li>
-                    <span class="task-text">{{ task[1] }}</span>
-                    <a href="{{ url_for('complete', task_id=task[0]) }}" class="complete-btn">DONE</a>
-                    <a href="{{ url_for('delete', task_id=task[0]) }}" class="delete-btn"
-                       onclick="return confirm('УДАЛИТЬ?')">DEL</a>
-                </li>
-            {% endfor %}
-        </ul>
+<div class="top-links">
+    <a href="{{ url_for('authors_page') }}" class="link-btn">👥 Авторы</a>
+    <a href="{{ url_for('logout') }}" class="link-btn">🚪 Выйти</a>
+</div>
 
-        <div style="margin-top: 30px; display: flex; flex-direction: column; gap: 10px;">
-            <a href="{{ url_for('completed_page') }}" class="task-text" style="text-align: center; text-decoration: none; color: #666;">
-                [ ПЕРЕЙТИ В АРХИВ ]
-            </a>
-            <a href="{{ url_for('other_site') }}" class="complete-btn" style="text-align: center; background: #e10600; color: #fff;">
-                ОТКРЫТЬ ВТОРОЙ САЙТ
-            </a>
-        </div>
-    </div>
-</body>
-</html>
+<h1>📝 Список дел</h1>
+
+<form method="post">
+    <input class="input-str" name="task" placeholder="Например: постирать вещи" required>
+    <button class="submit-btn" type="submit">➕ Добавить</button>
+</form>
+
+<ul>
+    {% if tasks %}
+        {% for task_id, task_name in tasks %}
+            <li>
+                <span class="task-text">{{ task_name }}</span>
+                <a href="/complete/{{ task_id }}" class="complete-btn">✅</a>
+                <a href="/delete/{{ task_id }}" class="delete-btn">Удалить</a>
+            </li>
+        {% endfor %}
+    {% else %}
+        <li class="empty">Пока задач нет 😊</li>
+    {% endif %}
+</ul>
+
+<a href="/completed" class="link-btn">➡️ Выполненные</a>
+
+{% endblock %}
